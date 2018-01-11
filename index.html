@@ -27,7 +27,7 @@
 <!--HTML-->
 
 <div class="ml-2 mt-2">
-    <a href="#" id="menu" data-activates="slide-out" class="button-collapse"><i
+    <a href="#" id="menu" data-activates="location-side-nav" class="location-side-nav-btn"><i
             class="small material-icons color-deep-purple">menu</i></a>
 </div>
 <!-- Tap Target Structure -->
@@ -39,27 +39,35 @@
 </div>
 
 <!---->
-<ul id="slide-out" class="side-nav grey lighten-1">
+<ul id="location-side-nav" class="side-nav grey lighten-1">
     <li>
-        <div class="user-view">
-            <div class="background">
-                <img src="img/default-grey.svg">
-            </div>
-            <a href="#!name"><span class="white-text name"></span></a>
-            <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
+      <div class="user-view">
+        <div class="background">
+          <img class="img-fluid" src="https://cdn.pixabay.com/photo/2018/01/09/17/04/compass-3072065_960_720.jpg">
         </div>
+        <a href=""><span class="white-text">Neighborhood Map</span></a>
+        <a href="https://github.com/reuben777"><span class="white-text name">Reuben Groenewald</span></a>
+        <a href="mailto:reubengroenewald@gmail.com?Subject=Neighborhood%20Map"><span class="white-text email">reubengroenewald@gmail.com</span></a>
+      </div>
     </li>
-    <li class="collection-item"><a href="#">Dummy Data</a></li>
-    <li class="collection-item"><a href="#">Dummy Data</a></li>
-    <li class="collection-item"><a href="#">Dummy Data</a></li>
-    <li class="collection-item"><a href="#">Dummy Data</a></li>
-    <li class="collection-item"><a href="#">Dummy Data</a></li>
+    <li class="collection-item">
+      <div class="row">
+        <div class="input-field col s6">
+          <input placeholder="City name" id="city_filter" type="text" data-bind="value: filter_input, valueUpdate: 'afterkeydown', executeOnEnter: closeSideNav">
+          <label for="city_filter">Filter</label>
+        </div>
+      </div>
+    </li>
+    <li class="collection-item" data-bind="foreach: filtered_search">
+      <a href="javascript:void(0);" data-bind="text: caption"></a>
+    </li>
+
 </ul>
 <div id="map"></div>
 
 <script>
     $('.tap-target').tapTarget('open');
-    $('.button-collapse').sideNav({
+    $('.location-side-nav-btn').sideNav({
             menuWidth: '300', // Default is 300
             edge: 'left', // Choose the horizontal origin
             closeOnClick: false, // Closes side-nav on <a> clicks, useful for Angular/Meteor
@@ -73,12 +81,11 @@
 </script>
 
 <!--/HTML-->
-<!--ViewModel-->
-<script type='text/javascript' src='js/viewmodel.js'></script>
-<!--Google maps script-->
-<script type='text/javascript' src='js/gmaps.js'></script>
-<!--Google maps api script-->
-<script async defer onerror='handleMapError()' src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDiZ3UWW4Z2zLNUyB1N1aZQ41QkgAp6un0&v=3&callback=initMap">
-</script>
+  <!--ViewModel-->
+  <script type='text/javascript' src='js/viewmodel.js'></script>
+  <!--Google maps script-->
+  <script type='text/javascript' src='js/gmaps.js'></script>
+  <!--Google maps api script-->
+  <script async defer onerror='handleMapError()' src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDiZ3UWW4Z2zLNUyB1N1aZQ41QkgAp6un0&v=3&callback=initMap"></script>
 </body>
 </html>

@@ -37,7 +37,6 @@ function initMap() {
             // from the array of alphabetical characters.
             var location = {lat: marker.lat, lng: marker.lng};
             var dynamic_icon = makeMarkerIcon(marker.icon_settings);
-            console.log('icon', dynamic_icon);
             return new google.maps.Marker({
                 position: location,
                 title: marker.title,
@@ -46,12 +45,8 @@ function initMap() {
             });
         }
 
-
-
         AppViewModel.locations.forEach(function(marker_info, indx) {
-
             AppViewModel.locations[indx].marker = addMarker(marker_info, indx);
-            console.log('AppViewModel', AppViewModel.locations);
         });
     }
     else {
@@ -62,5 +57,5 @@ function initMap() {
 
 // Fallback error handling method for Google Maps
 var handleMapError = function () {
-
+  console.log('map error');
 };

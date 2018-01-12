@@ -60,7 +60,7 @@
     </li>
     <div data-bind="if: mapLoaded" >
       <li class="collection-item" data-bind="foreach: filtered_search">
-        <a href="javascript:void(0);" data-bind="text: caption, click: $root.itemSelected"></a>
+        <a href="javascript:void(0);" class="waves-effect waves-light" data-bind="text: caption, click: $root.itemSelected"></a>
       </li>
     </div>
 
@@ -82,6 +82,16 @@
       </div>
 </div>
 
+<div id="item_info" class="modal bottom-sheet">
+    <div class="modal-content">
+      <h1 data-bind="text: modal_caption, style: { color: modal_text_colour }"></h1>
+      <div data-bind="html: modal_excerpt"></div>
+      <p>
+        Source: <a href="https://en.wikipedia.org/wiki">wikipedia</a>
+      </p>
+    </div>
+</div>
+
 <script>
     $('.tap-target').tapTarget('open');
     $('.location-side-nav-btn').sideNav({
@@ -95,6 +105,17 @@
             }, // A function to be called when sideNav is closed
         }
     );
+    $('#item_info').modal({
+    dismissible: true, // Modal can be dismissed by clicking outside of the modal
+    opacity: .5, // Opacity of modal background
+    inDuration: 300, // Transition in duration
+    outDuration: 200, // Transition out duration
+    complete: function() {
+      AppViewModel.modal_caption('');
+      AppViewModel.modal_excerpt('');
+    } // Callback for Modal close
+  }
+);
 </script>
 
 <!--/HTML-->

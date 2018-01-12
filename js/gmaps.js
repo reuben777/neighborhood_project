@@ -14,7 +14,7 @@ function initMap() {
             center: {lat: 43.653226, lng: -79.383184},
             zoom: 11
         };
-
+        // gmap actually initialized here
         gmap = new google.maps.Map(document.getElementById('map'), map_params);
 
         // see https://developers.google.com/maps/documentation/javascript/markers -> Converting MarkerImage objects to type Icon
@@ -32,8 +32,6 @@ function initMap() {
 
         // Adds a marker to the map.
         function addMarker(marker, indx) {
-            // Add the marker at the clicked location, and add the next-available label
-            // from the array of alphabetical characters.
             var location = {lat: marker.lat, lng: marker.lng};
             var dynamic_icon = createMarkerCustomColor(marker.icon_settings);
             return new google.maps.Marker({
@@ -43,11 +41,49 @@ function initMap() {
                 map: gmap
             });
         }
-        // setup markers
+        // used to prevent redundancy
+        function updateModalInfo (caption, excerpt, colour) {
+          AppViewModel.modal_caption(caption);
+          AppViewModel.modal_excerpt(excerpt);
+          AppViewModel.modal_text_colour("#" + colour);
+        }
+
+        // setup markers by looping through locations
         AppViewModel.locations.forEach(function(marker_info, indx) {
+            // add marker
             AppViewModel.locations[indx].marker = addMarker(marker_info, indx);
+            // listen events for marker click event
             this.addListener = google.maps.event.addListener(marker_info.marker,'click', function() {
-                openStreetView(this);
+              // center marker when clicked
+              gmap.panTo(marker_info.marker.getPosition());
+              // set marker animation
+              marker_info.marker.setAnimation(google.maps.Animation.BOUNCE);
+              // remove/stop animation after specified time
+              setTimeout(function() {
+                  marker_info.marker.setAnimation(null);
+              }, 2100);
+              updateModalInfo(marker_info.caption, "<p>Loading...</p>", marker_info.colour_scheme);
+              // wiki ajax call to get article info on location
+              $.ajax({
+                  type: 'GET',
+                  dataType: 'jsonp',
+                  data: {titles: marker_info.caption, prop: "extracts", exlimit: 1},
+                  url: "http://en.wikipedia.org/w/api.php?action=query&format=json&callback=?"
+              }).done(function(data) {
+                  var returned_article = data.query.pages[Object.keys(data.query.pages)[0]];
+                  // default modal info
+                  updateModalInfo(marker_info.caption, "<p>No results were found.</p>", marker_info.colour_scheme);
+                  if (returned_article.extract) {
+                    var extract_info = returned_article.extract;
+                    // update modal info with extract data
+                    updateModalInfo(marker_info.caption, extract_info, marker_info.colour_scheme);
+                  }
+              }).fail(function(jqXHR, textStatus, errorThrown) {
+                  // ajax call failed.
+                  updateModalInfo(marker_info.caption, "<p>An Erro occured. Please check your internet connection and try again.</p>", marker_info.colour_scheme);
+              });
+              // when marker clicked open modal
+              $('#item_info').modal('open');
             });
         });
         // set visibility of street view

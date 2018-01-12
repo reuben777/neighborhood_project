@@ -4,9 +4,8 @@
 
 ### Project Overview -
 
-<br>
 This is my Udacity Neighborhood map project. I didn't use my actual neighborhood because their is not many touristic stuff here. Mostly farms and wildlife.
-I do want to one day go to Torronto, and therefor I choose at random a few places that poped up on google maps.
+I want to one day go to Toronto, and therefor I choose at random a few places that popped up on google maps.
 <br>
 
 ## Running the Application

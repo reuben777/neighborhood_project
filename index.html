@@ -50,7 +50,7 @@
         <a href="mailto:reubengroenewald@gmail.com?Subject=Neighborhood%20Map"><span class="white-text email">reubengroenewald@gmail.com</span></a>
       </div>
     </li>
-    <li class="collection-item">
+    <li data-bind="if: mapLoaded" class="collection-item">
       <div class="row">
         <div class="input-field col s6">
           <input placeholder="City name" id="city_filter" type="text" data-bind="value: filter_input, valueUpdate: 'afterkeydown', executeOnEnter: closeSideNav">
@@ -58,12 +58,29 @@
         </div>
       </div>
     </li>
-    <li class="collection-item" data-bind="foreach: filtered_search">
-      <a href="javascript:void(0);" data-bind="text: caption"></a>
-    </li>
+    <div data-bind="if: mapLoaded" >
+      <li class="collection-item" data-bind="foreach: filtered_search">
+        <a href="javascript:void(0);" data-bind="text: caption, click: $root.itemSelected"></a>
+      </li>
+    </div>
 
 </ul>
-<div id="map"></div>
+<div id="map" data-bind="visible: mapLoaded"></div>
+<div class="container" data-bind="ifnot: mapLoaded">
+  <div class="row">
+        <div class="col s12 m6">
+          <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+              <span class="card-title">Google Maps Error</span>
+              <p>Google Maps is unavailable right now. Please try again later.</p>
+            </div>
+            <div class="card-action">
+              <a href="javaScript: location.reload();">Refresh</a>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
 
 <script>
     $('.tap-target').tapTarget('open');
@@ -81,11 +98,11 @@
 </script>
 
 <!--/HTML-->
-  <!--ViewModel-->
-  <script type='text/javascript' src='js/viewmodel.js'></script>
-  <!--Google maps script-->
-  <script type='text/javascript' src='js/gmaps.js'></script>
   <!--Google maps api script-->
-  <script async defer onerror='handleMapError()' src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDiZ3UWW4Z2zLNUyB1N1aZQ41QkgAp6un0&v=3&callback=initMap"></script>
+  <script type='text/javascript' src='js/gmaps.js'></script>
+  <!--ViewModel-->
+  <script async type='text/javascript' src='js/viewmodel.js'></script>
+  <!--Google maps script-->
+  <script async defer onerror='mapErrorHandler()' src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDiZ3UWW4Z2zLNUyB1N1aZQ41QkgAp6un0&v=3&callback=initMap"></script>
 </body>
 </html>

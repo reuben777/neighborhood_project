@@ -13,8 +13,11 @@ Download files. (unzip if needed). Then open the index.html file with your nativ
 
 ### Frameworks
 Knockoutjs - [http://knockoutjs.com](http://knockoutjs.com)
+
 Bootstrap - [https://getbootstrap.com](https://getbootstrap.com)
+
 Materializecss - [http://materializecss.com/](http://materializecss.com/)
+
 WikiApi - [https://www.mediawiki.org/wiki/API:Main_page](https://www.mediawiki.org/wiki/API:Main_page)
 
 #### Credit

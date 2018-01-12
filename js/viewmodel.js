@@ -1,8 +1,15 @@
+var colouredIcon = function(markerColor) {
+    return 'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'+ markerColor + '|40|_|%E2%80%A2';
+};
+
+var urlIcon = function(url) {
+    return url.length > 6 ? url : colouredIcon(url);
+};
+
 // Icon Sertting helper function
 var IconSettings = function(url, size, origin, anchor, scaledSize) {
     var self = this;
-    self.url = url || 'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|'+ 'ff0000' + '|40|_|%E2%80%A2';
-    self.url = self.url.length > 6 ? self.url : colouredIcon(self.url);
+    self.url = urlIcon(url || colouredIcon('ff0000'));
     self.size = size || {x: 21, y: 34};
     self.origin = origin || {x: 0, y: 0};
     self.anchor = anchor || {x: 0, y: 0};

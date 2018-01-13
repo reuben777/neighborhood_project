@@ -57,58 +57,9 @@ function initMap() {
             AppViewModel.locations[indx].marker = addMarker(marker_info, indx);
             // listen events for marker click event
             this.addListener = google.maps.event.addListener(marker_info.marker,'click', function() {
-              // center marker when clicked
-              gmap.panTo(marker_info.marker.getPosition());
-              // set marker animation
-              marker_info.marker.setAnimation(google.maps.Animation.BOUNCE);
-              // remove/stop animation after specified time
-              setTimeout(function() {
-                  marker_info.marker.setAnimation(null);
-              }, 2100);
-              updateModalInfo(marker_info.caption, "<p>Loading...</p>", marker_info.colour_scheme);
-              // wiki ajax call to get article info on location
-              $.ajax({
-                  type: 'GET',
-                  dataType: 'jsonp',
-                  data: {titles: marker_info.caption, prop: "extracts", exlimit: 1},
-                  url: "http://en.wikipedia.org/w/api.php?action=query&format=json&callback=?"
-              }).done(function(data) {
-                  var returned_article = data.query.pages[Object.keys(data.query.pages)[0]];
-                  // default modal info
-                  updateModalInfo(marker_info.caption, "<p>No results were found.</p>", marker_info.colour_scheme);
-                  if (returned_article.extract) {
-                    var extract_info = returned_article.extract;
-                    // update modal info with extract data
-                    updateModalInfo(marker_info.caption, extract_info, marker_info.colour_scheme);
-                  }
-              }).fail(function(jqXHR, textStatus, errorThrown) {
-                  // ajax call failed.
-                  updateModalInfo(marker_info.caption, "<p>An Erro occured. Please check your internet connection and try again.</p>", marker_info.colour_scheme);
-              });
-              // when marker clicked open modal
-              $('#item_info').modal('open');
+              AppViewModel.itemSelected(marker_info);
             });
         });
-        // set visibility of street view
-        toggleStreetView = function (visible) {
-          if (panorama) {
-            if (visible === true) {
-              panorama.setVisible(true);
-            } else {
-              panorama.setVisible(false);
-            }
-          }
-        };
-        // setup street view and show
-        openStreetView = function (location) {
-          panorama = gmap.getStreetView();
-          panorama.setPosition(location.position);
-          panorama.setPov(/** @type {google.maps.StreetViewPov} */({
-            heading: 265,
-            pitch: 0
-          }));
-          toggleStreetView(true);
-        };
     }
 }
 

@@ -3,13 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Neighborhood Map</title>
-    <!--Import Jquery -->
-    <script type='text/javascript' src='js/libs/jquery.min.js'></script>
-    <!-- Import knockout js-->
-    <script type='text/javascript' src='js/libs/knockout-3.4.2.js'></script>
-    <!-- Compiled and minified JavaScript -->
-    <script type='text/javascript' src="js/libs/materialize.min.js"></script>
-
     <!--Bootstrap-->
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <!--Import materialize.css-->
@@ -54,7 +47,7 @@
       <div class="row">
         <div class="input-field col s6">
           <input placeholder="City name" id="city_filter" type="text" data-bind="value: filter_input, valueUpdate: 'afterkeydown', executeOnEnter: closeSideNav">
-          <label for="city_filter">Filter</label>
+          <label for="city_filter" class="active">Filter</label>
         </div>
       </div>
     </li>
@@ -92,38 +85,46 @@
     </div>
 </div>
 
-<script>
-    $('.tap-target').tapTarget('open');
-    $('.location-side-nav-btn').sideNav({
-            menuWidth: '300', // Default is 300
-            edge: 'left', // Choose the horizontal origin
-            closeOnClick: false, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-            draggable: true, // Choose whether you can drag to open on touch screens,
-            onOpen: function (el) { /* Do Stuff* */
-            }, // A function to be called when sideNav is opened
-            onClose: function (el) { /* Do Stuff* */
-            }, // A function to be called when sideNav is closed
-        }
-    );
-    $('#item_info').modal({
-    dismissible: true, // Modal can be dismissed by clicking outside of the modal
-    opacity: .5, // Opacity of modal background
-    inDuration: 300, // Transition in duration
-    outDuration: 200, // Transition out duration
-    complete: function() {
-      AppViewModel.modal_caption('');
-      AppViewModel.modal_excerpt('');
-    } // Callback for Modal close
-  }
-);
-</script>
-
 <!--/HTML-->
+  <!--Import Jquery -->
+  <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+  <!-- Import knockout js-->
+  <script type='text/javascript' src='js/libs/knockout-3.4.2.js'></script>
+  <!-- Compiled and minified JavaScript -->
+  <script type='text/javascript' src="js/libs/materialize.min.js"></script>
+
+  <!--ViewModel-->
+  <script type='text/javascript' src='js/viewmodel.js'></script>
+
   <!--Google maps api script-->
   <script type='text/javascript' src='js/gmaps.js'></script>
-  <!--ViewModel-->
-  <script async type='text/javascript' src='js/viewmodel.js'></script>
+
   <!--Google maps script-->
   <script async defer onerror='mapErrorHandler()' src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDiZ3UWW4Z2zLNUyB1N1aZQ41QkgAp6un0&v=3&callback=initMap"></script>
+  <script>
+      $('.tap-target').tapTarget('open');
+      $('.location-side-nav-btn').sideNav({
+              menuWidth: '300', // Default is 300
+              edge: 'left', // Choose the horizontal origin
+              closeOnClick: false, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+              draggable: true, // Choose whether you can drag to open on touch screens,
+              onOpen: function (el) { /* Do Stuff* */
+              }, // A function to be called when sideNav is opened
+              onClose: function (el) { /* Do Stuff* */
+              }, // A function to be called when sideNav is closed
+          }
+      );
+      $('#item_info').modal({
+      dismissible: true, // Modal can be dismissed by clicking outside of the modal
+      opacity: .5, // Opacity of modal background
+      inDuration: 300, // Transition in duration
+      outDuration: 200, // Transition out duration
+      complete: function() {
+        AppViewModel.modal_caption('');
+        AppViewModel.modal_excerpt('');
+      } // Callback for Modal close
+    }
+  );
+  </script>
 </body>
 </html>
